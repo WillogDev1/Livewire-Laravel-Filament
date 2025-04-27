@@ -12,8 +12,8 @@ class UserPolicy
      */
     public function viewAny(User $user): bool
     {
-    // Permitir apenas se o usuário for administrador
-    return $user->is_admin;
+        // Permitir se o usuário tiver a permissão "view users"
+        return $user->can('view any users');
     }
 
     /**
@@ -21,8 +21,8 @@ class UserPolicy
      */
     public function view(User $user, User $model): bool
     {
-    // Permitir apenas se o usuário for administrador
-    return $user->is_admin;
+        // Permitir se o usuário tiver a permissão "view users"
+        return $user->can('view users');
     }
 
     /**
@@ -30,8 +30,8 @@ class UserPolicy
      */
     public function create(User $user): bool
     {
-    // Permitir apenas se o usuário for administrador
-    return $user->is_admin;
+        // Permitir se o usuário tiver a permissão "create users"
+        return $user->can('create users');
     }
 
     /**
@@ -39,8 +39,8 @@ class UserPolicy
      */
     public function update(User $user, User $model): bool
     {
-    // Permitir apenas se o usuário for administrador
-    return $user->is_admin;
+        // Permitir se o usuário tiver a permissão "edit users"
+        return $user->can('edit users');
     }
 
     /**
@@ -48,8 +48,8 @@ class UserPolicy
      */
     public function delete(User $user, User $model): bool
     {
-    // Permitir apenas se o usuário for administrador
-    return $user->is_admin;
+        // Permitir se o usuário tiver a permissão "delete users"
+        return false;
     }
 
     /**
@@ -57,8 +57,8 @@ class UserPolicy
      */
     public function restore(User $user, User $model): bool
     {
-    // Permitir apenas se o usuário for administrador
-    return $user->is_admin;
+        // Permitir se o usuário tiver a permissão "restore users"
+        return false;
     }
 
     /**
@@ -66,7 +66,7 @@ class UserPolicy
      */
     public function forceDelete(User $user, User $model): bool
     {
-    // Permitir apenas se o usuário for administrador
-    return $user->is_admin;
+        // Permitir se o usuário tiver a permissão "force delete users"
+        return false;
     }
 }

@@ -9,12 +9,13 @@ use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Support\Str;
 
 class User extends Authenticatable implements FilamentUser
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -25,6 +26,8 @@ class User extends Authenticatable implements FilamentUser
         'name',
         'email',
         'password',
+        'is_admin',
+        'can_access_panel_admin',
     ];
 
     /**
@@ -35,6 +38,7 @@ class User extends Authenticatable implements FilamentUser
     protected $hidden = [
         'password',
         'remember_token',
+        
     ];
 
     /**
@@ -66,8 +70,14 @@ class User extends Authenticatable implements FilamentUser
         return $this->is_admin;
     }
 
+    public function canAccessPanelAdmin(): bool
+    {
+        return $this->can_access_panel_admin;
+    }
+
     public function canAccessPanel(Panel $panel): bool
     {
-        return $this->isAdmin();
+        // Verifica se o usuário é administrador ou se tem permissão explícita para acessar o painel
+        return $this->canAccessPanelAdmin();
     }
 }
