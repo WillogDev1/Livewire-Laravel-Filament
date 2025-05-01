@@ -26,8 +26,6 @@ class User extends Authenticatable implements FilamentUser
         'name',
         'email',
         'password',
-        'is_admin',
-        'can_access_panel_admin',
     ];
 
     /**
@@ -65,19 +63,8 @@ class User extends Authenticatable implements FilamentUser
             ->implode('');
     }
 
-    public function isAdmin(): bool
-    {
-        return $this->is_admin;
-    }
-
-    public function canAccessPanelAdmin(): bool
-    {
-        return $this->can_access_panel_admin;
-    }
-
     public function canAccessPanel(Panel $panel): bool
     {
-        // Verifica se o usuário é administrador ou se tem permissão explícita para acessar o painel
-        return $this->canAccessPanelAdmin();
+        return $this->hasRole('super_admin');
     }
 }
